@@ -10,6 +10,7 @@ using WebDriverManager;
 using SeleniumExtras.WaitHelpers;
 using AssigmentTask.Drivers;
 using OpenQA.Selenium.Interactions;
+using ICSharpCode.SharpZipLib.Core;
 
 
 namespace AssigmentTask.Pages
@@ -42,8 +43,24 @@ namespace AssigmentTask.Pages
             }
             return getElement(By.CssSelector("[value='" + elementValue + "']"));
         }
- 
-       public IList<IWebElement> getElements(By by)
+
+
+        public IWebElement GetElementFromListByText(By locator, string elementValue)
+        {
+            IList<IWebElement> elements = getElements(locator);
+
+            foreach (var element in elements)
+            {
+                if (element.Text.Equals(elementValue, StringComparison.OrdinalIgnoreCase))
+                {
+                    return element;
+                }
+            }
+            throw new NoSuchElementException($"No element with text '{elementValue}' was found.");
+        }
+
+
+        public IList<IWebElement> getElements(By by)
         {
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
             return wait.Until(ExpectedConditions.PresenceOfAllElementsLocatedBy(by));

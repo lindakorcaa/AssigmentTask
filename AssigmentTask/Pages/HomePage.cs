@@ -10,40 +10,31 @@ namespace AssigmentTask.Pages
 {
     public class HomePage : PageBase
     {
-        
+        By LogInOrSignUpButton = By.ClassName("fa-lock");
+        By DeleteAccountButton = By.ClassName("fa-trash-o");
+        By ProductsButton = By.ClassName("card_travel");
 
-        By SignInButton = By.ClassName("login");
-        By SearchButton = By.ClassName("search_query");
-        By input_Number_Of_Nights = By.XPath("//input[@id='to-place']");
-        By btn_Book_Now = By.XPath("//input[@value='Book now !']");
 
-        public HomePage(Drivers.DriverManager driver) : base(driver)
+        public HomePage(Drivers.DriverManager driver) : base(driver) { }
+
+        public void ClickLogInOrSignUpButton()
         {
-
+            WaitUntilElementIsClickable(LogInOrSignUpButton);
+            getElement(LogInOrSignUpButton).Click();
         }
 
-        
-        public void ClickSignInButton()
+        public bool IsUserLoggedIn()
         {
-            WaitUntilElementIsDisplayed(SignInButton);
-            getElement(SignInButton).Click();
+            WaitUntilElementIsClickable(DeleteAccountButton);
+            return getElement(DeleteAccountButton).Displayed;
         }
 
-        public void ClickSearchButton()
+        public void ClickProductsButton()
         {
-            WaitUntilElementIsClickable(SearchButton);
-            getElement(SearchButton).Click();
+            WaitUntilElementIsClickable(ProductsButton);
+            getElement(ProductsButton).Click();
         }
 
-        public void fillOutSearchInputField(string keyword)
-        {
-            WaitUntilElementIsDisplayed(SearchButton);
-            getElement(SearchButton).SendKeys(keyword);
-        }
 
-        public void PressEnter()
-        {
-            getElement(SearchButton).SendKeys(Keys.Enter);
-        }
     }
 }
